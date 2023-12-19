@@ -16,6 +16,8 @@ This project is meant to explore the applicability of transfer learning using CR
 
 [img.csv](https://drive.google.com/file/d/1pyLXukhnv01hm9_cCkxvaaCzr6RDh3Ot/view?usp=sharing) (attached above as zip, rest were too large to upload)
 
+Drive that contains TextOCR data used to train model: https://drive.google.com/drive/folders/1EPqSkxYYRRlC3fWXKbAwsMsp5smHAYTS?usp=sharing
+
 
 **MJSynth training/validation loss per epoch:**
 
@@ -37,3 +39,8 @@ Adjusted accuracy calculated by counting incorrect values as (1/distance) instea
 
 **Results on TextOCR:**
 
+Leveshtein distance on incorrect words: 4.7727272727272725
+
+Leveshtein distance on incorrect words: 4.590909090909091
+
+Mostly inconclusive unfortunately, due to special characters and the small training set as a side effect
