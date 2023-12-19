@@ -28,7 +28,7 @@ Drive that contains TextOCR data used to train model: https://drive.google.com/d
 
 Leveshtein distance on incorrect words: 2.1056717705412984
 
-Leveshtein distance on incorrect words: 0.84616
+Leveshtein distance on correct words: 0.84616
 
 Accuracy on validation set: 0.72178
 
