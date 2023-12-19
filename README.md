@@ -3,9 +3,26 @@ This project is meant to explore the applicability of transfer learning using CR
 Preprocessing: Transform arbitrary quadrilateral labels to grayscaled rectangles
 ![Untitled](https://github.com/lkevint/OCR_CRNN/assets/68560628/a419b029-c6a8-45b5-a764-335d0c04743e)
 
+Datasets: 
+[MJSynth](https://huggingface.co/datasets/priyank-m/MJSynth_text_recognition)
+
+[Text OCR](https://www.kaggle.com/datasets/robikscube/textocr-text-extraction-from-images-dataset/data)
+
+[annot.csv](https://drive.google.com/file/d/141_pYai65T8eKUmrR-BjzbJLKiY8S1gJ/view?usp=sharing)
+
+[img.csv](https://drive.google.com/file/d/1pyLXukhnv01hm9_cCkxvaaCzr6RDh3Ot/view?usp=sharing) (attached above as zip, rest were too large to upload)
+
 
 MJSynth training/validation loss per epoch: 
 ![image](https://github.com/lkevint/OCR_CRNN/assets/68560628/88cc8c5c-30c0-4678-98d0-fcf7e88f9bcc)
+
+
+Results on MJSynth:
+Leveshtein distance on incorrect words: 2.1056717705412984
+Leveshtein distance on incorrect words: 0.84616
+Accuracy on validation set: 0.72178
+Adjusted accuracy on validation set: 0.8877088865382983
+Adjusted accuracy calculated by counting incorrect values as (1/distance) instead of 0.
 
 Results on TextOCR:
 
