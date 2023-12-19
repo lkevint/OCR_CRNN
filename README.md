@@ -3,6 +3,7 @@ This project is meant to explore the applicability of transfer learning using CR
 Preprocessing: Transform arbitrary quadrilateral labels to grayscaled rectangles
 ![Untitled](https://github.com/lkevint/OCR_CRNN/assets/68560628/a419b029-c6a8-45b5-a764-335d0c04743e)
 
+
 MJSynth training/validation loss per epoch: 
 ![image](https://github.com/lkevint/OCR_CRNN/assets/68560628/88cc8c5c-30c0-4678-98d0-fcf7e88f9bcc)
 
