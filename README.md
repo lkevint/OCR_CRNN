@@ -1,0 +1,1 @@
+This project is meant to explore the applicability of transfer learning using CRNN architecture pretrained on a clean, well labeled dataset like MJSynth, and fine-tuning it for better accuracy on messy datasets like TextOCR where the text examples are extremely inconsistent in size, shape, and font.
