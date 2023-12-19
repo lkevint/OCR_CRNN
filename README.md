@@ -6,7 +6,7 @@ This project is meant to explore the applicability of transfer learning using CR
 ![Untitled](https://github.com/lkevint/OCR_CRNN/assets/68560628/a419b029-c6a8-45b5-a764-335d0c04743e)
 
 
-**Datasets: **
+**Datasets:**
 
 [MJSynth](https://huggingface.co/datasets/priyank-m/MJSynth_text_recognition)
 
@@ -17,7 +17,7 @@ This project is meant to explore the applicability of transfer learning using CR
 [img.csv](https://drive.google.com/file/d/1pyLXukhnv01hm9_cCkxvaaCzr6RDh3Ot/view?usp=sharing) (attached above as zip, rest were too large to upload)
 
 
-**MJSynth training/validation loss per epoch: **
+**MJSynth training/validation loss per epoch:**
 
 ![image](https://github.com/lkevint/OCR_CRNN/assets/68560628/88cc8c5c-30c0-4678-98d0-fcf7e88f9bcc)
 
