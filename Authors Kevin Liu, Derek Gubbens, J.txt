@@ -1,0 +1,18 @@
+Authors: Kevin Liu, Derek Gubbens, Jiajian Huang
+
+This project is meant to explore the applicability of transfer learning using CRNN architecture pretrained on a clean, well labeled dataset and apply transfer learning for better accuracy on datasets containing messy real-world images, where text examples are extremely inconsistent in size, shape, and font. Our choice of datasets are [MJSynth](https://www.robots.ox.ac.uk/~vgg/data/text/) and [TextOCR](https://textvqa.org/textocr/). 
+
+
+
+
+**Datasets:**
+
+[MJSynth](https://www.robots.ox.ac.uk/~vgg/data/text/)
+
+[annot.csv](https://drive.google.com/file/d/141_pYai65T8eKUmrR-BjzbJLKiY8S1gJ/view?usp=sharing)
+
+[img.csv](https://drive.google.com/file/d/1pyLXukhnv01hm9_cCkxvaaCzr6RDh3Ot/view?usp=sharing) (attached above as zip, rest were too large to upload)
+
+
+
+**Results on MJSynth:**
