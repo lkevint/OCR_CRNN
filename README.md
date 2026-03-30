@@ -1,28 +1,56 @@
 Authors: Kevin Liu, Derek Gubbens, Jiajian Huang
-This project is meant to explore the applicability of transfer learning using CRNN architecture pretrained on a clean, well labeled dataset like [MJSynth](https://www.robots.ox.ac.uk/~vgg/data/text/), and fine-tuning it for better accuracy on messy datasets like [TextOCR](https://textvqa.org/textocr/) where the text examples are extremely inconsistent in size, shape, and font. The main paper we draw inspiration from is [OCR using CRNN: A Deep Learning Approach for Text (Yadav et al., 2023)](https://ieeexplore.ieee.org/document/10170436), as it is recent and achieved outstanding accuracy on benchmark datasets (not TextOCR). Our TensorFlow implementation is very similar to [this tutorial](https://github.com/TheAILearner/A-CRNN-model-for-Text-Recognition-in-Keras/blob/master/CRNN%20Model.ipynb), which was based off of [this paper](https://arxiv.org/pdf/1507.05717.pdf), and we additionally consulted [this repository](https://github.com/GitYCC/crnn-pytorch/tree/master/src) and [this repository](https://github.com/TheAILearner/A-CRNN-model-for-Text-Recognition-in-Keras) which were very helpful.
 
-**Datasets:**
-
-[MJSynth](https://huggingface.co/datasets/priyank-m/MJSynth_text_recognition)
-
-[annot.csv](https://drive.google.com/file/d/141_pYai65T8eKUmrR-BjzbJLKiY8S1gJ/view?usp=sharing)
-
-[img.csv](https://drive.google.com/file/d/1pyLXukhnv01hm9_cCkxvaaCzr6RDh3Ot/view?usp=sharing) (attached above as zip, rest were too large to upload)
+This project is meant to explore the applicability of using CRNN architecture pretrained on a well labeled synthetic dataset that is heavily altered to imitate possible real world shapes and images. Our choice of dataset is [MJSynth](https://www.robots.ox.ac.uk/~vgg/data/text/). Text examples can be extremely inconsistent in size, shape, and font.
 
 
-**MJSynth training/validation loss per epoch:**
-
-![image](https://github.com/lkevint/OCR_CRNN/assets/68560628/88cc8c5c-30c0-4678-98d0-fcf7e88f9bcc)
-
+**Dataset:**
+[MJSynth](https://www.robots.ox.ac.uk/~vgg/data/text/)
 
 **Results on MJSynth:**
+We trained our model on a subset of 2^21 training images 
 
-Leveshtein distance on all words: 0.84616
+# CRNN OCR
 
-Leveshtein distance on incorrect words: 2.1056717705412984
+This project contains:
+- `train_crnn.py` for training
+- `infer_crnn.py` for running inference on a folder of images
 
-Accuracy on validation set: 0.72178
+## Setup
 
-Adjusted accuracy on validation set: 0.8877088865382983
+Install the requirements first:
 
-Adjusted accuracy calculated by counting incorrect values as (1/distance) instead of 0.
+```bash
+pip install -r requirements.txt
+```
+
+## Training
+
+Run:
+
+```bash
+python train_crnn.py --epochs 5 --samples 64 --root data/90kDICT32px
+```
+
+Arguments:
+- `--epochs`: number of training epochs (default: 5)
+- `--samples`: number of training samples to use (default: 8192)
+- `--batch_size`: batch size (default: 32)
+- `--root`: path to the dataset root
+
+Notes:
+- `root` is assumed to be the `90kDICT32px` folder found inside MJSynth download
+- `annotation_train.txt` and `annotation_test.txt` are assumed to be inside `root`
+
+## Inference
+
+Run:
+
+```bash
+python infer_crnn.py --model models/CRNN_0.pth --image_dir my_images
+```
+
+Arguments:
+- `--model`: path to a saved model file
+- `--image_dir`: folder containing images to read
+
+The script prints the predicted text for each supported image in the folder.
