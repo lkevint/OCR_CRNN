@@ -2,12 +2,23 @@ Authors: Kevin Liu, Derek Gubbens, Jiajian Huang
 
 This project is meant to explore the applicability of using CRNN architecture pretrained on a well labeled synthetic dataset that is heavily altered to imitate possible real world shapes and images. Our choice of dataset is [MJSynth](https://www.robots.ox.ac.uk/~vgg/data/text/). Text examples can be extremely inconsistent in size, shape, and font.
 
+**Dataset:**
+[MJSynth](https://www.robots.ox.ac.uk/~vgg/data/text/)
+
 **Results:**
 We trained our model on a subset of $2^{21}$ training images for 5 epochs and achieved a training accuracy of 76% and a testing accuracy of 70%. We believe this performance is very satisfactory, as the accuracy is based on the rate of exact character matching, and many of the images in the dataset are very ambiguous. Below are some results of inference on testing images.
 
+Predicted: composite
+![13_composite_15517](https://github.com/user-attachments/assets/64ba835b-5c81-4cbe-a40f-91ad1ddbc3aa)
 
-**Dataset:**
-[MJSynth](https://www.robots.ox.ac.uk/~vgg/data/text/)
+Predicted: underpays
+![176_underpays_82187](https://github.com/user-attachments/assets/440e9cbf-b4df-4339-8369-50732a98ae15)
+
+Predicted: Ukase
+![173_Ukase_81594](https://github.com/user-attachments/assets/fb1740e7-90d2-4b47-a453-88f8f3a70bb0)
+
+Predicted: Uncahelly
+![9_unabashedly_81675](https://github.com/user-attachments/assets/68577b4b-420f-4c3b-b798-9eb427ddacc3)
 
 # CRNN OCR
 
