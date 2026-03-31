@@ -2,12 +2,12 @@ Authors: Kevin Liu, Derek Gubbens, Jiajian Huang
 
 This project is meant to explore the applicability of using CRNN architecture pretrained on a well labeled synthetic dataset that is heavily altered to imitate possible real world shapes and images. Our choice of dataset is [MJSynth](https://www.robots.ox.ac.uk/~vgg/data/text/). Text examples can be extremely inconsistent in size, shape, and font.
 
+**Results:**
+We trained our model on a subset of $2^{21}$ training images for 5 epochs and achieved a training accuracy of 76% and a testing accuracy of 70%. We believe this performance is very satisfactory, as the accuracy is based on the rate of exact character matching, and many of the images in the dataset are very ambiguous. Below are some results of inference on testing images.
+
 
 **Dataset:**
 [MJSynth](https://www.robots.ox.ac.uk/~vgg/data/text/)
-
-**Results on MJSynth:**
-We trained our model on a subset of 2^21 training images 
 
 # CRNN OCR
 
@@ -17,18 +17,19 @@ This project contains:
 
 ## Setup
 
-Install the requirements first:
+Install the requirements:
 
 ```bash
 pip install -r requirements.txt
 ```
+If you intend to use CUDA, change the PyTorch arguments appropriately.
 
 ## Training
 
-Run:
+Example usage:
 
 ```bash
-python train_crnn.py --epochs 5 --samples 64 --root data/90kDICT32px
+python train_crnn.py --epochs 5 --samples 8192 --batch_size 32 --root path_to/90kDICT32px 
 ```
 
 Arguments:
@@ -43,7 +44,7 @@ Notes:
 
 ## Inference
 
-Run:
+Example usage:
 
 ```bash
 python infer_crnn.py --model models/CRNN_0.pth --image_dir my_images
