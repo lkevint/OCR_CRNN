@@ -124,12 +124,19 @@ if __name__ == "__main__":
     parser.add_argument("--root", type=str, required=True)
     args = parser.parse_args()
 
+    if args.epochs < 1:
+        args.epochs = 5
+
+    if args.batch_size < 1:
+        args.batch_size = 32
+
+    samples = max(1, args.samples)
+    test_samples = (samples + 7) // 8
+
     # Assumes root points to the 90kDICT32px folder
     root = Path(args.root)
     train_annotation = root / "annotation_train.txt"
     test_annotation = root / "annotation_test.txt"
-    samples = max(1, args.samples)
-    test_samples = (samples + 7) // 8
 
     train_dataset = MJSynthCustom.MJSynthCustom(
         root,
@@ -165,6 +172,7 @@ if __name__ == "__main__":
 
     script_dir = Path(__file__).resolve().parent
     models_dir = script_dir / "models"
+    models_dir.mkdir(parents=True, exist_ok=True)
 
     model_index = 0
     model_save_path = models_dir / f"CRNN_{model_index}.pth"
