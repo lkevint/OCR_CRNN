@@ -6,7 +6,7 @@ This project is meant to explore the applicability of using CRNN architecture pr
 [MJSynth](https://www.robots.ox.ac.uk/~vgg/data/text/)
 
 **Results:**
-We trained our model on a subset of $2^{21}$ training images for 5 epochs and achieved a training accuracy of 76% and a testing accuracy of 70%. We believe this performance is very satisfactory, as the accuracy is based on the rate of exact character matching, and many of the images in the dataset are very ambiguous. Below are some results of inference on testing images.
+We trained our model on a subset of $2^{21}$ training images for 5 epochs, achieving an exact-match accuracy of 70% and a character-level accuracy of 88% on the testing dataset. As many of the images in the dataset can be ambiguous, we believe this performance to be very satisfactory with our computing resources, and we expect an exact-match accuracy greater than 80% to be achievable with this architecture. Below are some results of inference on testing images.
 
 ![13_composite_15517](https://github.com/user-attachments/assets/64ba835b-5c81-4cbe-a40f-91ad1ddbc3aa)
 
