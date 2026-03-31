@@ -10,10 +10,42 @@ from src import CRNN, MJSynthCustom, global_variables, label_utils
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
+
+def edit_distance(seq1, seq2):
+    m, n = len(seq1), len(seq2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+    for i in range(m + 1):
+        dp[i][0] = i
+    for j in range(n + 1):
+        dp[0][j] = j
+
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if seq1[i - 1] == seq2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                dp[i][j] = 1 + min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])
+
+    return dp[m][n]
+
+
+def character_accuracy(pred_seqs, true_seqs):
+    batch_char_acc = 0.0
+
+    for pred, true in zip(pred_seqs, true_seqs):
+        distance = edit_distance(pred, true)
+        sample_char_acc = max(0.0, 1 - distance / max(1, len(true)))
+        batch_char_acc += sample_char_acc
+
+    return batch_char_acc / len(true_seqs)
+
+
 def train_step(model, dataloader, loss_fn, optimizer):
     model.train()
     train_loss = 0.0
     train_acc = 0.0
+    train_char_acc = 0.0
 
     for X, y, y_lengths in dataloader:
         X = X.to(device)
@@ -42,11 +74,14 @@ def train_step(model, dataloader, loss_fn, optimizer):
             for target, length in zip(y, y_lengths)
         ]
         batch_acc = sum(pred == true for pred, true in zip(pred_seqs, true_seqs)) / len(true_seqs)
+        batch_char_acc = character_accuracy(pred_seqs, true_seqs)
         train_acc += batch_acc
+        train_char_acc += batch_char_acc
 
     train_loss /= len(dataloader)
     train_acc /= len(dataloader)
-    return train_loss, train_acc
+    train_char_acc /= len(dataloader)
+    return train_loss, train_acc, train_char_acc
 
 
 
@@ -54,6 +89,7 @@ def test_step(model, dataloader, loss_fn):
     model.eval()
     test_loss = 0.0
     test_acc = 0.0
+    test_char_acc = 0.0
 
     with torch.inference_mode():
         for X, y, y_lengths in dataloader:
@@ -79,34 +115,48 @@ def test_step(model, dataloader, loss_fn):
                 for target, length in zip(y, y_lengths)
             ]
             batch_acc = sum(pred == true for pred, true in zip(pred_seqs, true_seqs)) / len(true_seqs)
+            batch_char_acc = character_accuracy(pred_seqs, true_seqs)
             test_acc += batch_acc
+            test_char_acc += batch_char_acc
 
     test_loss /= len(dataloader)
     test_acc /= len(dataloader)
-    return test_loss, test_acc
+    test_char_acc /= len(dataloader)
+    return test_loss, test_acc, test_char_acc
 
 
 
 def train(model, train_dataloader, test_dataloader, optimizer, loss_fn, model_save_path, epochs=5):
-    results = {"train_loss": [], "train_acc": [], "test_loss": [], "test_acc": []}
+    results = {
+        "train_loss": [],
+        "train_acc": [],
+        "train_char_acc": [],
+        "test_loss": [],
+        "test_acc": [],
+        "test_char_acc": [],
+    }
     best_test_acc = None
 
     for epoch in tqdm(range(epochs)):
-        train_loss, train_acc = train_step(model, train_dataloader, loss_fn, optimizer)
-        test_loss, test_acc = test_step(model, test_dataloader, loss_fn)
+        train_loss, train_acc, train_char_acc = train_step(model, train_dataloader, loss_fn, optimizer)
+        test_loss, test_acc, test_char_acc = test_step(model, test_dataloader, loss_fn)
 
         print(
             f"Epoch: {epoch + 1} | "
             f"train_loss: {train_loss:.4f} | "
             f"train_acc: {train_acc:.4f} | "
+            f"train_char_acc: {train_char_acc:.4f} | "
             f"test_loss: {test_loss:.4f} | "
-            f"test_acc: {test_acc:.4f}"
+            f"test_acc: {test_acc:.4f} | "
+            f"test_char_acc: {test_char_acc:.4f}"
         )
 
         results["train_loss"].append(float(train_loss))
         results["train_acc"].append(float(train_acc))
+        results["train_char_acc"].append(float(train_char_acc))
         results["test_loss"].append(float(test_loss))
         results["test_acc"].append(float(test_acc))
+        results["test_char_acc"].append(float(test_char_acc))
 
         if best_test_acc is None or test_acc > best_test_acc:
             best_test_acc = test_acc
